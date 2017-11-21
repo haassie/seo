@@ -1,0 +1,29 @@
+{
+  "name": "haassie/core-seo",
+  "description": "Core SEO functions for TYPO3",
+  "type": "typo3-cms-extension",
+  "license": "GPL-3.0",
+  "keywords": [
+    "TYPO3",
+    "SEO"
+  ],
+  "authors": [
+    {
+      "name": "Richard Haeser",
+      "role": "Developer",
+      "email": "richardhaeser@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Haassie\\CoreSeo\\": "Classes/"
+    }
+  },
+  "require": {
+    "typo3/cms-core": "^8.7"
+  },
+  "replace": {
+    "core-seo": "self.version",
+    "typo3-ter/core-seo": "self.version"
+  }
+}
