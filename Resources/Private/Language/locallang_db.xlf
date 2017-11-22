@@ -6,6 +6,15 @@
 			<trans-unit id="pages.tabs.seo" xml:space="preserve">
 				<source>SEO</source>
 			</trans-unit>
+			<trans-unit id="pages.palettes.metadata" xml:space="preserve">
+				<source>Metadata</source>
+			</trans-unit>
+			<trans-unit id="pages.formlabel.canonical_url" xml:space="preserve">
+				<source>Set canonical URL</source>
+			</trans-unit>
+			<trans-unit id="pages.canonical_url" xml:space="preserve">
+				<source>Override canonical URL</source>
+			</trans-unit>
 			<trans-unit id="pages.seo_title" xml:space="preserve">
 				<source>SEO Title</source>
 			</trans-unit>
