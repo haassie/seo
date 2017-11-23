@@ -2,7 +2,7 @@
   "name": "haassie/core_seo",
   "description": "Core SEO functions for TYPO3",
   "type": "typo3-cms-extension",
-  "license": "GPL-3.0",
+  "license": "GPL-2.0",
   "keywords": [
     "TYPO3",
     "SEO"
