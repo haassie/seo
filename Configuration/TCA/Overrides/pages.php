@@ -15,6 +15,22 @@ $temporaryColumns = [
             'size' => 50
         ],
     ],
+    'robot_index' => [
+        'exclude' => true,
+        'label' => $ll.'pages.robot_index',
+        'config' => [
+            'type' => 'check',
+            'default' => 1
+        ],
+    ],
+    'robot_follow' => [
+        'exclude' => true,
+        'label' => $ll.'pages.robot_follow',
+        'config' => [
+            'type' => 'check',
+            'default' => 1
+        ],
+    ],
     'canonical_url' => [
         'exclude' => 1,
         'label' => $ll.'pages.canonical_url',
@@ -52,9 +68,18 @@ $temporaryColumns = [
     '
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+    'pages',
+    'robot_instructions',
+    'robot_index,robot_follow,
+    '
+);
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'pages',
-    '--div--;' . $ll . 'pages.tabs.seo,--palette--;' . $ll . 'pages.palettes.metadata;metadata',
+    '--div--;' . $ll . 'pages.tabs.seo,--palette--;' . $ll . 'pages.palettes.metadata;metadata,
+    --palette--;' . $ll . 'pages.palettes.robot_instructions;robot_instructions
+    ',
     '',
     'after:subtitle'
 );

@@ -6,12 +6,11 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Richard Haeser',
     'author_email' => 'richardhaeser@gmail.com',
     'state' => 'alpha',
-    'uploadfolder' => 1,
     'clearCacheOnLoad' => 1,
     'version' => '0.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.1-8.7.99'
+            'typo3' => '8.7.1-9.0.99'
         ],
         'conflicts' => [],
         'suggests' => [],

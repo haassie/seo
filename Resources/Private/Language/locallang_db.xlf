@@ -9,6 +9,9 @@
 			<trans-unit id="pages.palettes.metadata" xml:space="preserve">
 				<source>Metadata</source>
 			</trans-unit>
+			<trans-unit id="pages.palettes.robot_instructions" xml:space="preserve">
+				<source>Robot Instructions</source>
+			</trans-unit>
 			<trans-unit id="pages.formlabel.canonical_url" xml:space="preserve">
 				<source>Set canonical URL</source>
 			</trans-unit>
@@ -17,6 +20,12 @@
 			</trans-unit>
 			<trans-unit id="pages.seo_title" xml:space="preserve">
 				<source>SEO Title</source>
+			</trans-unit>
+			<trans-unit id="pages.robot_index" xml:space="preserve">
+				<source>Index current page</source>
+			</trans-unit>
+			<trans-unit id="pages.robot_follow" xml:space="preserve">
+				<source>Follow links on current page</source>
 			</trans-unit>
 		</body>
 	</file>
