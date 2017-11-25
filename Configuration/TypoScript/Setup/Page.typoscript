@@ -1,0 +1,11 @@
+page {
+    headerData {
+        100 = COA
+        100 {
+            10 =< lib.currentUrl
+            10 {
+                wrap = <link rel="canonical" href="|" />
+            }
+        }
+    }
+}

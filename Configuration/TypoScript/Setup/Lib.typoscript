@@ -1,0 +1,9 @@
+lib.currentUrl = TEXT
+lib.currentUrl {
+    typolink {
+        parameter.data = page:canonical_url // page:uid
+        returnLast = url
+        forceAbsoluteUrl = 1
+        addQueryString = 1
+    }
+}
