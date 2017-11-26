@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 $ll = 'LLL:EXT:core_seo/Resources/Private/Language/locallang_db.xlf:';
 $temporaryColumns = [
     'seo_title' => [
-        'exclude' => 1,
+        'exclude' => true,
         'label' => $ll.'pages.seo_title',
         'config' => [
             'type' => 'input',
@@ -32,7 +32,7 @@ $temporaryColumns = [
         ],
     ],
     'canonical_url' => [
-        'exclude' => 1,
+        'exclude' => true,
         'label' => $ll.'pages.canonical_url',
         'config' => [
             'type' => 'input',
