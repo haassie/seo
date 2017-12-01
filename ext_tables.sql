@@ -10,4 +10,8 @@ CREATE TABLE pages (
 	og_description text,
 	og_image int(11) DEFAULT '0' NOT NULL,
 	og_type varchar(50) DEFAULT 'website' NOT NULL,
+	twitter_card varchar(50) DEFAULT '' NOT NULL,
+	twitter_title varchar(255) DEFAULT '' NOT NULL,
+	twitter_description text,
+	twitter_image int(11) DEFAULT '0' NOT NULL,
 );

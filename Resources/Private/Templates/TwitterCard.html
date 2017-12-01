@@ -1,0 +1,38 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+		xmlns:seo="http://typo3.org/ns/Haassie/CoreSeo/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:debug>{_all}</f:debug>
+	<f:if condition="{card}">
+		<seo:metaTag name="twitter:card" content="{card}" />
+	</f:if>
+
+	<f:if condition="{title}">
+		<seo:metaTag name="twitter:title" content="{title}" />
+	</f:if>
+
+	<f:if condition="{description}">
+		<seo:metaTag name="twitter:description" content="{description}" />
+	</f:if>
+
+	<f:if condition="{twitter_image}">
+		<f:for each="{twitter_image}" as="image" iteration="iterator">
+			<f:if condition="{iterator.isFirst}">
+				<f:then>
+					<f:variable name="twitter_images" value="{f:uri.image(image: image, minWidth: '300', minHeight: '157', absolute: 1)}" />
+				</f:then>
+				<f:else>
+					<f:variable name="twitter_images" value="{twitter_images},{f:uri.image(image: image, minWidth: '300', minHeight: '157', absolute: 1)}" />
+				</f:else>
+			</f:if>
+		</f:for>
+
+		<seo:metaTag name="twitter:image" content="{twitter_images}" />
+	</f:if>
+
+	<f:if condition="{site}">
+		<seo:metaTag name="twitter:site" content="{site}" />
+	</f:if>
+
+	<f:if condition="{url}">
+		<seo:metaTag name="twitter:url" content="{url}" />
+	</f:if>
+</html>

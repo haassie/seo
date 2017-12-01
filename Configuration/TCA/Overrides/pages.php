@@ -108,7 +108,66 @@ $temporaryColumns = [
                 [$ll.'pages.og_type.profile', 'profile'],
             ]
         ]
-    ]
+    ],
+    'twitter_title' => [
+        'exclude' => true,
+        'label' => $ll.'pages.twitter_title',
+        'config' => [
+            'type' => 'input',
+            'eval' => 'trim',
+            'max' => 255,
+            'size' => 50
+        ],
+    ],
+    'twitter_description' => [
+        'exclude' => true,
+        'label' => $ll.'pages.twitter_description',
+        'config' => [
+            'type' => 'text',
+            'cols' => 40,
+            'rows' => 3
+        ]
+    ],
+    'twitter_image' => [
+        'exclude' => true,
+        'label' => $ll.'pages.twitter_image',
+        'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+            'twitter_image',
+            [
+                // Use the imageoverlayPalette instead of the basicoverlayPalette
+                'overrideChildTca' => [
+                    'types' => [
+                        '0' => [
+                            'showitem' => '
+                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                    --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                            'showitem' => '
+                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                    --palette--;;filePalette'
+                        ],
+                    ],
+                ],
+            ],
+            $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+        )
+    ],
+    'twitter_card' => [
+        'exclude' => true,
+        'label' => $ll.'pages.twitter_card',
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectSingle',
+            'items' => [
+                [$ll.'pages.twitter_card.summary', 'summary'],
+                [$ll.'pages.twitter_card.summary_large_image', 'summary_large_image'],
+                [$ll.'pages.twitter_card.app', 'app'],
+                [$ll.'pages.twitter_card.player', 'player'],
+            ]
+        ]
+    ],
+
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns(
@@ -138,6 +197,17 @@ $temporaryColumns = [
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
     'pages',
+    'twitter',
+    '
+    --linebreak--, twitter_title,
+    --linebreak--, twitter_description,
+    --linebreak--, twitter_image,
+    --linebreak--, twitter_card,
+    '
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+    'pages',
     'robot_instructions',
     'robot_index,robot_follow,
     '
@@ -151,6 +221,7 @@ $temporaryColumns = [
         --palette--;' . $ll . 'pages.palettes.robot_instructions;robot_instructions,
     --div--;' . $ll . 'pages.tabs.social,
         --palette--;' . $ll . 'pages.palettes.og;og,
+        --palette--;' . $ll . 'pages.palettes.twitter_card;twitter,
     ',
     '',
     'after:subtitle'
