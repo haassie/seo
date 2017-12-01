@@ -6,11 +6,17 @@
 			<trans-unit id="pages.tabs.seo" xml:space="preserve">
 				<source>SEO</source>
 			</trans-unit>
+			<trans-unit id="pages.tabs.social" xml:space="preserve">
+				<source>Social media</source>
+			</trans-unit>
 			<trans-unit id="pages.palettes.metadata" xml:space="preserve">
 				<source>Metadata</source>
 			</trans-unit>
 			<trans-unit id="pages.palettes.robot_instructions" xml:space="preserve">
 				<source>Robot Instructions</source>
+			</trans-unit>
+			<trans-unit id="pages.palettes.og" xml:space="preserve">
+				<source>Open Graph</source>
 			</trans-unit>
 			<trans-unit id="pages.formlabel.canonical_url" xml:space="preserve">
 				<source>Set canonical URL</source>
@@ -26,6 +32,27 @@
 			</trans-unit>
 			<trans-unit id="pages.robot_follow" xml:space="preserve">
 				<source>Follow links on current page</source>
+			</trans-unit>
+			<trans-unit id="pages.og_title" xml:space="preserve">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="pages.og_description" xml:space="preserve">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="pages.og_image" xml:space="preserve">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="pages.og_type" xml:space="preserve">
+				<source>Type of page</source>
+			</trans-unit>
+			<trans-unit id="pages.og_type.website" xml:space="preserve">
+				<source>Webpage</source>
+			</trans-unit>
+			<trans-unit id="pages.og_type.article" xml:space="preserve">
+				<source>Article</source>
+			</trans-unit>
+			<trans-unit id="pages.og_type.profile" xml:space="preserve">
+				<source>Profile of person</source>
 			</trans-unit>
 		</body>
 	</file>

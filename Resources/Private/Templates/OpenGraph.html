@@ -1,0 +1,49 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+		xmlns:seo="http://typo3.org/ns/Haassie/CoreSeo/ViewHelpers" data-namespace-typo3-fluid="true">
+	<f:if condition="{locale}">
+		<seo:metaTag property="og:locale" content="{locale}" />
+	</f:if>
+
+	<f:if condition="{type}">
+		<seo:metaTag property="og:type" content="{type}" />
+	</f:if>
+
+	<f:if condition="{title}">
+		<seo:metaTag property="og:title" content="{title}" />
+	</f:if>
+
+	<f:if condition="{description}">
+		<seo:metaTag property="og:description" content="{description}" />
+	</f:if>
+
+	<f:if condition="{url}">
+		<seo:metaTag property="og:url" content="{url}" />
+	</f:if>
+
+	<f:if condition="{site_name}">
+		<seo:metaTag property="og:site_name" content="{site_name}" />
+	</f:if>
+
+	<f:if condition="{og_image}">
+		<f:for each="{og_image}" as="image">
+			<seo:metaTag property="og:image" content="{f:uri.image(image: image, width: '640c', height: '480c', absolute: 1)}" />
+		</f:for>
+	</f:if>
+
+	<f:if condition="{type} == 'article'">
+		<seo:metaTag property="article:published_time" content="{published_time->f:format.date(format: 'c')}" />
+		<seo:metaTag property="article:modified_time" content="{modified_time->f:format.date(format: 'c')}" />
+	</f:if>
+
+	<f:if condition="{author}">
+		<seo:metaTag property="author" content="{author}" />
+	</f:if>
+
+	<f:if condition="{fb_admins}">
+		<seo:metaTag property="fb:admins" content="{fb_admins}" />
+	</f:if>
+
+	<f:if condition="{fb_app_id}">
+		<seo:metaTag property="fb:app_id" content="{fb_app_id}" />
+	</f:if>
+</html>

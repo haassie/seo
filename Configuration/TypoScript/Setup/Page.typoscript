@@ -7,6 +7,63 @@ page {
             10 {
                 wrap = <link rel="canonical" href="|" />
             }
+
+            # Open Graph
+            20 = FLUIDTEMPLATE
+            20 {
+                templateName = OpenGraph
+                templateRootPaths {
+                    10 = EXT:core_seo/Resources/Private/Templates
+                }
+
+                variables {
+                    title = TEXT
+                    title.data = page:og_title // page:seo_title // page:title
+
+                    # Locale of the current page
+                    locale = TEXT
+                    locale.data = TSFE:config|config|locale_all
+
+                    type = TEXT
+                    type.data = page:og_type
+
+                    description = TEXT
+                    description.data = page:og_description // page:description
+
+                    published_time = TEXT
+                    published_time.data = page:crdate
+
+                    modified_time = TEXT
+                    modified_time.data = page:lastUpdated // page:tstamp
+
+                    # Name of the site (not page)
+                    site_name = TEXT
+                    site_name.data = GLOBAL:TYPO3_CONF_VARS|SYS|sitename
+
+                    # Author of the page
+                    author = TEXT
+                    author.data = page:author
+
+                    # Facebook numeric admin ID
+                    fb_admins = TEXT
+                    fb_admins.value >
+
+                    # Facebook numeric app ID
+                    fb_app_id = TEXT
+                    fb_app_id.value >
+
+                    url =< lib.currentUrl
+                }
+
+                dataProcessing {
+                    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+                    10 {
+                        references.fieldName = og_image
+                        as = og_image
+                        if.isTrue.field = og_image
+                    }
+                }
+            }
         }
     }
 }
