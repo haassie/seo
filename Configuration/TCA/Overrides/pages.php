@@ -3,7 +3,7 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$ll = 'LLL:EXT:core_seo/Resources/Private/Language/locallang_db.xlf:';
+$ll = 'LLL:EXT:seo/Resources/Private/Language/locallang_db.xlf:';
 $temporaryColumns = [
     'seo_title' => [
         'exclude' => true,

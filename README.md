@@ -1,4 +1,4 @@
-# TYPO3 extension `core_seo`
+# TYPO3 extension `seo`
 
 This extension is currently a proof of concept how SEO could be improved within TYPO3. The goal is to have the features of this extension in the core.
 

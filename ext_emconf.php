@@ -1,7 +1,7 @@
 <?php
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'Core SEO',
-    'description' => 'Core SEO functions for TYPO3',
+    'title' => 'Search Engine Optimization',
+    'description' => 'Search Engine Optimization functions for TYPO3',
     'category' => 'fe',
     'author' => 'TYPO3 Core Team',
     'author_email' => 'typo3cms@typo3.org',

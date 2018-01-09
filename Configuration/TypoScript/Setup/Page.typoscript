@@ -13,7 +13,7 @@ page {
             20 {
                 templateName = OpenGraph
                 templateRootPaths {
-                    10 = EXT:core_seo/Resources/Private/Templates
+                    10 = EXT:seo/Resources/Private/Templates
                 }
 
                 variables {
@@ -70,7 +70,7 @@ page {
             30 {
                 templateName = TwitterCard
                 templateRootPaths {
-                    10 = EXT:core_seo/Resources/Private/Templates
+                    10 = EXT:seo/Resources/Private/Templates
                 }
 
                 variables {
