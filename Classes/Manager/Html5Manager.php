@@ -1,6 +1,6 @@
 <?php
-
-namespace Haassie\CoreSeo\Manager;
+declare(strict_types=1);
+namespace TYPO3\CMS\Seo\Manager;
 
 /*
  * This file is part of the TYPO3 CMS project.

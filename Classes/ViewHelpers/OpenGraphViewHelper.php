@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
+namespace TYPO3\CMS\Seo\ViewHelpers;
 
-namespace Haassie\CoreSeo\ViewHelpers;
-
-use Haassie\CoreSeo\Manager\OpenGraphManager;
+use TYPO3\CMS\Seo\Manager\OpenGraphManager;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;

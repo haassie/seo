@@ -1,6 +1,6 @@
 <?php
-
-namespace Haassie\CoreSeo\Manager;
+declare(strict_types=1);
+namespace TYPO3\CMS\Seo\Manager;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -25,7 +25,7 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
 
     public function addTag(string $key, string $content)
     {
-        if (!$this->validateKey($key)) {
+        if (!$this->isValidKey($key)) {
             throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
         }
         $tagBuilder = $this->getTagBuilder();
@@ -71,7 +71,7 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
         return $this->tags;
     }
 
-    public function validateKey(string $key): bool
+    public function isValidKey(string $key): bool
     {
         return in_array($key, self::$VALID_KEYS, true);
     }

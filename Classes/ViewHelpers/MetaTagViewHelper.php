@@ -1,5 +1,6 @@
 <?php
-namespace Haassie\CoreSeo\ViewHelpers;
+declare(strict_types=1);
+namespace TYPO3\CMS\Seo\ViewHelpers;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -21,7 +22,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  * Class MetaTagViewHelper
- * @package Haassie\CoreSeo\ViewHelpers
+ * @package TYPO3\CMS\Seo\ViewHelpers
  */
 class MetaTagViewHelper extends AbstractTagBasedViewHelper
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Haassie\CoreSeo\UserFunc;
+namespace TYPO3\CMS\Seo\UserFunc;
 
 use GeorgRinger\News\Utility\Page;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;

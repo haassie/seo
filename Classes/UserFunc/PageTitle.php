@@ -1,5 +1,5 @@
 <?php
-namespace Haassie\CoreSeo\UserFunc;
+namespace TYPO3\CMS\Seo\UserFunc;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -18,7 +18,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Class PageTitle
- * @package Haassie\CoreSeo\UserFunc
+ * @package TYPO3\CMS\Seo\UserFunc
  */
 class PageTitle
 {

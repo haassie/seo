@@ -1,39 +1,43 @@
 {
-  "name": "haassie/core_seo",
-  "description": "Core SEO functions for TYPO3",
-  "type": "typo3-cms-extension",
-  "license": "GPL-2.0",
-  "keywords": [
-    "TYPO3",
-    "SEO"
-  ],
-  "authors": [
-    {
-      "name": "Richard Haeser",
-      "role": "Developer",
-      "email": "richardhaeser@gmail.com"
-    }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Haassie\\CoreSeo\\": "Classes/"
-    }
-  },
-  "require": {
-    "typo3/cms-core": "^8.7"
-  },
-  "replace": {
-    "core_seo": "self.version",
-    "typo3-ter/core-seo": "self.version"
-  },
-  "config": {
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
-  },
-  "extra": {
-    "typo3/cms": {
-      "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build/Web"
-    }
-  }
+	"name": "typo3/cms-seo",
+	"type": "typo3-cms-framework",
+	"description": "SEO stuff for the core.",
+	"homepage": "https://typo3.org",
+	"license": ["GPL-2.0+"],
+	"authors": [{
+		"name": "TYPO3 Core Team",
+		"email": "typo3cms@typo3.org",
+		"role": "Developer"
+	}],
+
+	"require": {
+		"typo3/cms-core": "9.1.*@dev"
+	},
+	"conflict": {
+		"typo3/cms": "*"
+	},
+	"replace": {
+		"seo": "*"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "9.1.x-dev"
+		},
+		"typo3/cms": {
+			"Package": {
+				"partOfFactoryDefault": false
+			},
+			"extension-key": "seo"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"TYPO3\\CMS\\Seo\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"TYPO3\\CMS\\Seo\\Tests\\": "Tests/"
+		}
+	}
 }
