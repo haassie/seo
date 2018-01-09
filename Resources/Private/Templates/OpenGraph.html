@@ -5,23 +5,23 @@
 	</f:if>
 
 	<f:if condition="{type}">
-		<seo:metaTag property="og:type" content="{type}" />
+		<seo:openGraph key="og:type" content="{type}" />
 	</f:if>
 
 	<f:if condition="{title}">
-		<seo:metaTag property="og:title" content="{title}" />
+		<seo:openGraph key="og:title" content="{title}" />
 	</f:if>
 
 	<f:if condition="{description}">
-		<seo:metaTag property="og:description" content="{description}" />
+		<seo:openGraph key="og:description" content="{description}" />
 	</f:if>
 
 	<f:if condition="{url}">
-		<seo:metaTag property="og:url" content="{url}" />
+		<seo:openGraph key="og:url" content="{url}" />
 	</f:if>
 
 	<f:if condition="{site_name}">
-		<seo:metaTag property="og:site_name" content="{site_name}" />
+		<seo:openGraph key="og:site_name" content="{site_name}" />
 	</f:if>
 
 	<f:if condition="{og_image}">

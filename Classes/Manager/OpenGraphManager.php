@@ -1,0 +1,65 @@
+<?php
+
+namespace Haassie\CoreSeo\Manager;
+
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
+
+class OpenGraphManager extends AbstractManager implements ManagerInterface, SingletonInterface
+{
+    static protected $VALID_KEYS = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description'];
+
+    protected $tags = [];
+
+    public function addTag(string $key, string $content)
+    {
+        $tagBuilder = $this->getTagBuilder();
+        $tagBuilder->addAttribute('property', $key);
+        $tagBuilder->addAttribute('content', $content);
+
+        $this->tags[] = $tagBuilder->render();
+    }
+
+    public function addMediaTag(string $key, string $path, int $width = 0, int $height = 0)
+    {
+
+    }
+
+    public function getTag(string $key)
+    {
+        // TODO: Implement getTag() method.
+    }
+
+    public function getRenderedTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function validateKey(string $key): bool
+    {
+        return in_array($key, self::$VALID_KEYS, true);
+    }
+
+    private function getTagBuilder()
+    {
+        $tagBuilder = new TagBuilder('meta');
+
+        return $tagBuilder;
+    }
+
+
+}
