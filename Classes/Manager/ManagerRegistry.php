@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace TYPO3\CMS\Seo\Manager;
 
 /*
@@ -47,6 +48,18 @@ class ManagerRegistry implements SingletonInterface
     public function getAllManagers()
     {
         return $this->registry;
+    }
+
+    public function getManagerForKey(string $key)
+    {
+        foreach ($this->registry as $manager) {
+            /** @var ManagerInterface $manager */
+            if ($manager->isValidKey($key)) {
+                return $manager;
+            }
+        }
+
+        return null;
     }
 
     public function getRenderedTags(array &$params)

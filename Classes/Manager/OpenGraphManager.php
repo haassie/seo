@@ -38,24 +38,20 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
     public function addMediaTag(string $key, string $path, int $width = 0, int $height = 0)
     {
         $tags = [];
+
         $tagBuilder = $this->getTagBuilder();
         $tagBuilder->addAttribute('property', $key);
         $tagBuilder->addAttribute('content', $path);
-
         $tags[] = $tagBuilder->render();
 
         if ($width > 0 && $height > 0) {
-            $tagBuilder = $this->getTagBuilder();
-            $tagBuilder->addAttribute('property', $key . ':width');
-            $tagBuilder->addAttribute('content', $width);
+            foreach (['width', 'height'] as $propertyName) {
+                $tagBuilder = $this->getTagBuilder();
+                $tagBuilder->addAttribute('property', $key . ':' . $propertyName);
+                $tagBuilder->addAttribute('content', $$propertyName);
 
-            $tags[] = $tagBuilder->render();
-
-            $tagBuilder = $this->getTagBuilder();
-            $tagBuilder->addAttribute('property', $key, ':height');
-            $tagBuilder->addAttribute('content', $height);
-
-            $tags[] = $tagBuilder->render();
+                $tags[] = $tagBuilder->render();
+            }
         }
 
         $this->tags[] = implode(LF, $tags);

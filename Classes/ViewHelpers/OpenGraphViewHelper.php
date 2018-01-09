@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
+
 namespace TYPO3\CMS\Seo\ViewHelpers;
 
+use TYPO3\CMS\Seo\Manager\ManagerRegistry;
 use TYPO3\CMS\Seo\Manager\OpenGraphManager;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -34,7 +36,11 @@ class OpenGraphViewHelper extends AbstractViewHelper implements CompilableInterf
         RenderingContextInterface $renderingContext
     )
     {
-        $openGraphManager = GeneralUtility::makeInstance(OpenGraphManager::class);
-        $openGraphManager->addTag($arguments['key'], $arguments['content']);
+        $registry = ManagerRegistry::getInstance();
+
+        $handler = $registry->getManagerForKey($arguments['key']);
+        if ($handler) {
+            $handler->addTag($arguments['key'], $arguments['content']);
+        }
     }
 }
