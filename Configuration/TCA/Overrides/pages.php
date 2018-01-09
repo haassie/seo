@@ -82,12 +82,12 @@ $temporaryColumns = [
                     'types' => [
                         '0' => [
                             'showitem' => '
-                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                    --palette--;' . $ll . 'sys_file_reference.imageoverlayPaletteSocial;imageoverlayPaletteSocial,
                                     --palette--;;filePalette'
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
                             'showitem' => '
-                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                    --palette--;' . $ll . 'sys_file_reference.imageoverlayPaletteSocial;imageoverlayPaletteSocial,
                                     --palette--;;filePalette'
                         ],
                     ],
@@ -139,12 +139,12 @@ $temporaryColumns = [
                     'types' => [
                         '0' => [
                             'showitem' => '
-                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                    --palette--;' . $ll . 'sys_file_reference.imageoverlayPaletteSocial;imageoverlayPaletteSocial,
                                     --palette--;;filePalette'
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
                             'showitem' => '
-                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                                    --palette--;' . $ll . 'sys_file_reference.imageoverlayPaletteSocial;imageoverlayPaletteSocial,
                                     --palette--;;filePalette'
                         ],
                     ],
