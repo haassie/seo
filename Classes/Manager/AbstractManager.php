@@ -16,6 +16,7 @@ namespace Haassie\CoreSeo\Manager;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 abstract class AbstractManager
 {
@@ -31,6 +32,11 @@ abstract class AbstractManager
     public function has(string $key): bool
     {
         return isset($this->data[$key]);
+    }
+
+    protected function getTagBuilder(string $name = 'meta')
+    {
+        return new TagBuilder($name);
     }
 
 }

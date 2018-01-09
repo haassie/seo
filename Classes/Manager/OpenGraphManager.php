@@ -16,17 +16,18 @@ namespace Haassie\CoreSeo\Manager;
  */
 
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 class OpenGraphManager extends AbstractManager implements ManagerInterface, SingletonInterface
 {
-    static protected $VALID_KEYS = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description'];
+    static protected $VALID_KEYS = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description', 'og:site_name'];
 
     protected $tags = [];
 
     public function addTag(string $key, string $content)
     {
+        if (!$this->validateKey($key)) {
+            throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
+        }
         $tagBuilder = $this->getTagBuilder();
         $tagBuilder->addAttribute('property', $key);
         $tagBuilder->addAttribute('content', $content);
@@ -36,7 +37,28 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
 
     public function addMediaTag(string $key, string $path, int $width = 0, int $height = 0)
     {
+        $tags = [];
+        $tagBuilder = $this->getTagBuilder();
+        $tagBuilder->addAttribute('property', $key);
+        $tagBuilder->addAttribute('content', $path);
 
+        $tags[] = $tagBuilder->render();
+
+        if ($width > 0 && $height > 0) {
+            $tagBuilder = $this->getTagBuilder();
+            $tagBuilder->addAttribute('property', $key . ':width');
+            $tagBuilder->addAttribute('content', $width);
+
+            $tags[] = $tagBuilder->render();
+
+            $tagBuilder = $this->getTagBuilder();
+            $tagBuilder->addAttribute('property', $key, ':height');
+            $tagBuilder->addAttribute('content', $height);
+
+            $tags[] = $tagBuilder->render();
+        }
+
+        $this->tags[] = implode(LF, $tags);
     }
 
     public function getTag(string $key)
@@ -52,13 +74,6 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
     public function validateKey(string $key): bool
     {
         return in_array($key, self::$VALID_KEYS, true);
-    }
-
-    private function getTagBuilder()
-    {
-        $tagBuilder = new TagBuilder('meta');
-
-        return $tagBuilder;
     }
 
 
