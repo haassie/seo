@@ -52,8 +52,14 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
                 $tags[] = $tagBuilder->render();
             }
         }
+        if (isset($additionalInformation['alt']) && !empty($additionalInformation['alt'])) {
+            $tagBuilder = $this->getTagBuilder();
+            $tagBuilder->addAttribute('property', $key . ':alternative');
+            $tagBuilder->addAttribute('content', $additionalInformation['alt']);
+            $tags[] = $tagBuilder->render();
+        }
 
-        $this->tags[] = implode(LF, $tags);
+        return LF . implode(LF, $tags);
     }
 
 
