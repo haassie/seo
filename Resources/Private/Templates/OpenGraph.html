@@ -1,27 +1,27 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 		xmlns:seo="http://typo3.org/ns/TYPO3/CMS/Seo/ViewHelpers" data-namespace-typo3-fluid="true">
 	<f:if condition="{locale}">
-		<seo:metaTag property="og:locale" content="{locale}" />
+		<seo:metaTag key="og:locale" content="{locale}" />
 	</f:if>
 
 	<f:if condition="{type}">
-		<seo:openGraph key="og:type" content="{type}" />
+		<seo:metaTag key="og:type" content="{type}" />
 	</f:if>
 
 	<f:if condition="{title}">
-		<seo:openGraph key="og:title" content="{title}" />
+		<seo:metaTag key="og:title" content="{title}" />
 	</f:if>
 
 	<f:if condition="{description}">
-		<seo:openGraph key="og:description" content="{description}" />
+		<seo:metaTag key="og:description" content="{description}" />
 	</f:if>
 
 	<f:if condition="{url}">
-		<seo:openGraph key="og:url" content="{url}" />
+		<seo:metaTag key="og:url" content="{url}" />
 	</f:if>
 
 	<f:if condition="{site_name}">
-		<seo:openGraph key="og:site_name" content="{site_name}" />
+		<seo:metaTag key="og:site_name" content="{site_name}" />
 	</f:if>
 
 	<f:if condition="{og_image}">
@@ -31,19 +31,19 @@
 	</f:if>
 
 	<f:if condition="{type} == 'article'">
-		<seo:metaTag property="article:published_time" content="{published_time->f:format.date(format: 'c')}" />
-		<seo:metaTag property="article:modified_time" content="{modified_time->f:format.date(format: 'c')}" />
+		<seo:metaTagOld property="article:published_time" content="{published_time->f:format.date(format: 'c')}" />
+		<seo:metaTagOld property="article:modified_time" content="{modified_time->f:format.date(format: 'c')}" />
 	</f:if>
 
 	<f:if condition="{author}">
-		<seo:metaTag property="author" content="{author}" />
+		<seo:metaTagOld property="author" content="{author}" />
 	</f:if>
 
 	<f:if condition="{fb_admins}">
-		<seo:metaTag property="fb:admins" content="{fb_admins}" />
+		<seo:metaTagOld property="fb:admins" content="{fb_admins}" />
 	</f:if>
 
 	<f:if condition="{fb_app_id}">
-		<seo:metaTag property="fb:app_id" content="{fb_app_id}" />
+		<seo:metaTagOld property="fb:app_id" content="{fb_app_id}" />
 	</f:if>
 </html>

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace TYPO3\CMS\Seo\Manager;
 
 /*
@@ -17,11 +18,20 @@ namespace TYPO3\CMS\Seo\Manager;
 
 use TYPO3\CMS\Core\SingletonInterface;
 
-class Html5Manager extends AbstractManager implements ManagerInterface, SingletonInterface
+class TwitterManager extends AbstractManager implements ManagerInterface, SingletonInterface
 {
+    protected $handledKeys = ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:site', 'twitter:url'];
+
     public function addTag(string $key, string $content, bool $replace = false)
     {
-        // TODO: Implement addTag() method.
+        if (!$this->isValidKey($key)) {
+            throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
+        }
+        $tagBuilder = $this->getTagBuilder();
+        $tagBuilder->addAttribute('name', $key);
+        $tagBuilder->addAttribute('content', $content);
+
+        $this->tags[] = $tagBuilder->render();
     }
 
 }

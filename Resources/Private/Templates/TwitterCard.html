@@ -1,15 +1,15 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 		xmlns:seo="http://typo3.org/ns/TYPO3/CMS/Seo/ViewHelpers" data-namespace-typo3-fluid="true">
 	<f:if condition="{card}">
-		<seo:metaTag name="twitter:card" content="{card}" />
+		<seo:metaTag key="twitter:card" content="{card}" />
 	</f:if>
 
 	<f:if condition="{title}">
-		<seo:metaTag name="twitter:title" content="{title}" />
+		<seo:metaTag key="twitter:title" content="{title}" />
 	</f:if>
 
 	<f:if condition="{description}">
-		<seo:metaTag name="twitter:description" content="{description}" />
+		<seo:metaTag key="twitter:description" content="{description}" />
 	</f:if>
 
 	<f:if condition="{twitter_image}">
@@ -24,14 +24,14 @@
 			</f:if>
 		</f:for>
 
-		<seo:metaTag name="twitter:image" content="{twitter_images}" />
+		<seo:metaTagOld name="twitter:image" content="{twitter_images}" />
 	</f:if>
 
 	<f:if condition="{site}">
-		<seo:metaTag name="twitter:site" content="{site}" />
+		<seo:metaTag key="twitter:site" content="{site}" />
 	</f:if>
 
 	<f:if condition="{url}">
-		<seo:metaTag name="twitter:url" content="{url}" />
+		<seo:metaTag key="twitter:url" content="{url}" />
 	</f:if>
 </html>

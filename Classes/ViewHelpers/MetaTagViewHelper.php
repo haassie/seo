@@ -1,54 +1,46 @@
 <?php
 declare(strict_types=1);
+
 namespace TYPO3\CMS\Seo\ViewHelpers;
 
-/*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
-
-
+use TYPO3\CMS\Seo\Manager\ManagerRegistry;
+use TYPO3\CMS\Seo\Manager\OpenGraphManager;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
-/**
- * Class MetaTagViewHelper
- * @package TYPO3\CMS\Seo\ViewHelpers
- */
-class MetaTagViewHelper extends AbstractTagBasedViewHelper
+
+class MetaTagViewHelper extends AbstractViewHelper implements CompilableInterface
 {
+    use CompileWithRenderStatic;
 
     /**
-     * @var string
-     */
-    protected $tagName = 'meta';
-
-    /**
-     * Arguments initialization
      */
     public function initializeArguments()
     {
-        $this->registerTagAttribute('property', 'string', 'Property of meta tag');
-        $this->registerTagAttribute('name', 'string', 'Content of meta tag using the name attribute');
-        $this->registerTagAttribute('content', 'string', 'Content of meta tag');
+        $this->registerArgument('key', 'string', 'Key', true);
+        $this->registerArgument('content', 'string', 'Content', true);
     }
 
     /**
-     * Render viewhelper
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
      */
-    public function render()
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    )
     {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->addMetaTag($this->tag->render());
-    }
+        $registry = ManagerRegistry::getInstance();
 
+        $handler = $registry->getManagerForKey($arguments['key']);
+        if ($handler) {
+            $handler->addTag($arguments['key'], $arguments['content']);
+        }
+    }
 }

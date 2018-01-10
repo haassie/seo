@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace TYPO3\CMS\Seo\Manager;
 
 /*
@@ -21,12 +22,10 @@ namespace TYPO3\CMS\Seo\Manager;
 interface ManagerInterface
 {
 
-    public function addTag(string $key, string $content);
-
-    public function getTag(string $key);
-
-    public function getRenderedTags(): array;
+    public function addTag(string $key, string $content, bool $replace = false);
 
     public function isValidKey(string $key): bool;
+
+    public function getAllValidKeys(): array;
 
 }

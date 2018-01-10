@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace TYPO3\CMS\Seo\Manager;
 
 /*
@@ -15,18 +16,20 @@ namespace TYPO3\CMS\Seo\Manager;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 abstract class AbstractManager
 {
 
     /** @var array */
-    protected $data = [];
+    protected $tags = [];
+
+    /** @var array */
+    protected $handledKeys = [];
 
     public function getAll(): array
     {
-        return $this->data;
+        return $this->tags;
     }
 
     public function has(string $key): bool
@@ -34,7 +37,23 @@ abstract class AbstractManager
         return isset($this->data[$key]);
     }
 
-    protected function getTagBuilder(string $name = 'meta')
+    public function getTag(string $key)
+    {
+        // TODO: Implement getTag() method.
+    }
+
+
+    public function isValidKey(string $key): bool
+    {
+        return in_array($key, $this->handledKeys, true);
+    }
+
+    public function getAllValidKeys(): array
+    {
+        return $this->handledKeys;
+    }
+
+    protected function getTagBuilder(string $name = 'meta'): TagBuilder
     {
         return new TagBuilder($name);
     }

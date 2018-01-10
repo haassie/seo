@@ -26,9 +26,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ManagerRegistry implements SingletonInterface
 {
     /**
-     * @var array
+     * @var ManagerInterface[]
      */
     protected $registry = [];
+
+    protected $handledKeys = [];
 
     /**
      * Returns a class instance
@@ -42,35 +44,30 @@ class ManagerRegistry implements SingletonInterface
 
     public function add(string $class)
     {
-        $this->registry[$class] = GeneralUtility::makeInstance($class);
+        /** @var ManagerInterface $manager */
+        $manager = GeneralUtility::makeInstance($class);
+        $handledKeys = $manager->getAllValidKeys();
+        foreach ($handledKeys as $key) {
+            $this->handledKeys[$key] = $manager;
+        }
+        print_R($this->handledKeys);
+        $this->registry[$class] = $manager;
     }
 
-    public function getAllManagers()
+    /**
+     * @return ManagerInterface[]
+     */
+    public function getAllManagers(): array
     {
         return $this->registry;
     }
 
-    public function getManagerForKey(string $key)
+    public function getManagerForKey(string $key): ManagerInterface
     {
-        foreach ($this->registry as $manager) {
-            /** @var ManagerInterface $manager */
-            if ($manager->isValidKey($key)) {
-                return $manager;
-            }
+        if (isset($this->handledKeys[$key])) {
+            return $this->handledKeys[$key];
         }
-
-        return null;
-    }
-
-    public function getRenderedTags(array &$params)
-    {
-        foreach ($this->registry as $manager) {
-            /** @var ManagerInterface $manager */
-            $tags = $manager->getRenderedTags();
-            foreach ($tags as $tag) {
-                $params['metaTags'][] = $tag;
-            }
-        }
+        throw new \UnexpectedValueException(sprintf('No manager for key "%s" found', $key));
     }
 
 }

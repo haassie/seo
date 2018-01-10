@@ -19,11 +19,9 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 class OpenGraphManager extends AbstractManager implements ManagerInterface, SingletonInterface
 {
-    static protected $VALID_KEYS = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description', 'og:site_name'];
+    protected $handledKeys = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description', 'og:site_name'];
 
-    protected $tags = [];
-
-    public function addTag(string $key, string $content)
+    public function addTag(string $key, string $content, bool $replace = false)
     {
         if (!$this->isValidKey($key)) {
             throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
@@ -55,21 +53,6 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
         }
 
         $this->tags[] = implode(LF, $tags);
-    }
-
-    public function getTag(string $key)
-    {
-        // TODO: Implement getTag() method.
-    }
-
-    public function getRenderedTags(): array
-    {
-        return $this->tags;
-    }
-
-    public function isValidKey(string $key): bool
-    {
-        return in_array($key, self::$VALID_KEYS, true);
     }
 
 
