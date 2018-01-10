@@ -26,7 +26,7 @@
 
 	<f:if condition="{og_image}">
 		<f:for each="{og_image}" as="image">
-			<seo:openGraphMedia file="{f:uri.image(image: image, width: '640c', height: '480c', absolute: 1)}" />
+			<seo:media key="og:image" image="{image}" width="200" />
 		</f:for>
 	</f:if>
 

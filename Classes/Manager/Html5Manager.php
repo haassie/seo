@@ -19,9 +19,10 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 class Html5Manager extends AbstractManager implements ManagerInterface, SingletonInterface
 {
-    public function addTag(string $key, string $content, bool $replace = false)
+    public function addTag(string $key, string $content, array $additionalInformation = [], bool $replace = false)
     {
         // TODO: Implement addTag() method.
     }
+
 
 }

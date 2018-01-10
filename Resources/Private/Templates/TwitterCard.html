@@ -13,18 +13,9 @@
 	</f:if>
 
 	<f:if condition="{twitter_image}">
-		<f:for each="{twitter_image}" as="image" iteration="iterator">
-			<f:if condition="{iterator.isFirst}">
-				<f:then>
-					<f:variable name="twitter_images" value="{f:uri.image(image: image, minWidth: '300', minHeight: '157', absolute: 1)}" />
-				</f:then>
-				<f:else>
-					<f:variable name="twitter_images" value="{twitter_images},{f:uri.image(image: image, minWidth: '300', minHeight: '157', absolute: 1)}" />
-				</f:else>
-			</f:if>
+		<f:for each="{twitter_image}" as="image">
+			<seo:media key="twitter:image" image="{image}" width="200" />
 		</f:for>
-
-		<seo:metaTagOld name="twitter:image" content="{twitter_images}" />
 	</f:if>
 
 	<f:if condition="{site}">

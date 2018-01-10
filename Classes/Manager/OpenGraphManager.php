@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace TYPO3\CMS\Seo\Manager;
 
 /*
@@ -21,7 +22,7 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
 {
     protected $handledKeys = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description', 'og:site_name'];
 
-    public function addTag(string $key, string $content, bool $replace = false)
+    public function addTag(string $key, string $content, array $additionalInformation = [], bool $replace = false)
     {
         if (!$this->isValidKey($key)) {
             throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
@@ -30,23 +31,23 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
         $tagBuilder->addAttribute('property', $key);
         $tagBuilder->addAttribute('content', $content);
 
-        $this->tags[] = $tagBuilder->render();
+        $tag = $tagBuilder->render();
+        if ($key === 'og:image') {
+            $tag .= $this->renderAdditionalTags($key, $additionalInformation);
+        }
+
+        $this->tags[] = $tag;
     }
 
-    public function addMediaTag(string $key, string $path, int $width = 0, int $height = 0)
+    protected function renderAdditionalTags(string $key, array $additionalInformation = [])
     {
         $tags = [];
 
-        $tagBuilder = $this->getTagBuilder();
-        $tagBuilder->addAttribute('property', $key);
-        $tagBuilder->addAttribute('content', $path);
-        $tags[] = $tagBuilder->render();
-
-        if ($width > 0 && $height > 0) {
+        if (isset($additionalInformation['width'], $additionalInformation['height']) && $additionalInformation['width'] > 0 && $additionalInformation['height'] > 0) {
             foreach (['width', 'height'] as $propertyName) {
                 $tagBuilder = $this->getTagBuilder();
                 $tagBuilder->addAttribute('property', $key . ':' . $propertyName);
-                $tagBuilder->addAttribute('content', $$propertyName);
+                $tagBuilder->addAttribute('content', $additionalInformation[$propertyName]);
 
                 $tags[] = $tagBuilder->render();
             }

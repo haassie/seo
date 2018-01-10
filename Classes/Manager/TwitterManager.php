@@ -20,9 +20,9 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 class TwitterManager extends AbstractManager implements ManagerInterface, SingletonInterface
 {
-    protected $handledKeys = ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:site', 'twitter:url'];
+    protected $handledKeys = ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:site', 'twitter:url', 'twitter:creator', 'twitter:image'];
 
-    public function addTag(string $key, string $content, bool $replace = false)
+    public function addTag(string $key, string $content, array $additionalInformation = [], bool $replace = false)
     {
         if (!$this->isValidKey($key)) {
             throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
