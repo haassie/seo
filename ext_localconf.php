@@ -2,10 +2,6 @@
 
 defined('TYPO3_MODE') or die();
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-    '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:seo/Configuration/TSconfig/PageTSconfig.typoscript">'
-);
-
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
     '<INCLUDE_TYPOSCRIPT: source="DIR:EXT:seo/Configuration/TypoScript/Setup/" extensions="typoscript">'
 );
