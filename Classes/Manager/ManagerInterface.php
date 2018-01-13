@@ -22,10 +22,10 @@ namespace TYPO3\CMS\Seo\Manager;
 interface ManagerInterface
 {
 
-    public function addTag(string $key, string $content, array $additionalInformation = [], bool $replace = false);
+    public function addTag(string $name, string $content, array $additionalInformation = [], bool $replace = false);
 
-    public function isValidKey(string $key): bool;
+    public function isValidName(string $name): bool;
 
-    public function getAllValidKeys(): array;
+    public function getAllNames(): array;
 
 }

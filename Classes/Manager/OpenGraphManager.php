@@ -17,50 +17,38 @@ namespace TYPO3\CMS\Seo\Manager;
  */
 
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataElement;
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataProperty;
 
 class OpenGraphManager extends AbstractManager implements ManagerInterface, SingletonInterface
 {
-    protected $handledKeys = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description', 'og:site_name'];
+    protected $handledNames = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description', 'og:site_name'];
 
-    public function addTag(string $key, string $content, array $additionalInformation = [], bool $replace = false)
+    public function addTag(string $name, string $content, array $additionalInformation = [], bool $replace = false)
     {
-        if (!$this->isValidKey($key)) {
-            throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
+        if (!$this->isValidName($name)) {
+            throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $name, __CLASS__), 1515499561);
         }
-        $tagBuilder = $this->getTagBuilder();
-        $tagBuilder->addAttribute('property', $key);
-        $tagBuilder->addAttribute('content', $content);
+        $element = new MetaDataElement();
+        $element->setName($name);
+        $element->setContent($content);
+        $element->setDetails($additionalInformation);
 
-        $tag = $tagBuilder->render();
-        if ($key === 'og:image') {
-            $tag .= $this->renderAdditionalTags($key, $additionalInformation);
+
+        $property = new MetaDataProperty();
+        $property->setTagName('meta');
+        $property->setUsePropertyInsteadOfName(true);
+
+        if ($replace) {
+            $property->replaceItem($element);
+        } else {
+            $property->addItem($element);
         }
 
-        $this->tags[] = $tag;
+        $this->addProperty($property);
     }
 
-    protected function renderAdditionalTags(string $key, array $additionalInformation = [])
-    {
-        $tags = [];
 
-        if (isset($additionalInformation['width'], $additionalInformation['height']) && $additionalInformation['width'] > 0 && $additionalInformation['height'] > 0) {
-            foreach (['width', 'height'] as $propertyName) {
-                $tagBuilder = $this->getTagBuilder();
-                $tagBuilder->addAttribute('property', $key . ':' . $propertyName);
-                $tagBuilder->addAttribute('content', $additionalInformation[$propertyName]);
-
-                $tags[] = $tagBuilder->render();
-            }
-        }
-        if (isset($additionalInformation['alt']) && !empty($additionalInformation['alt'])) {
-            $tagBuilder = $this->getTagBuilder();
-            $tagBuilder->addAttribute('property', $key . ':alternative');
-            $tagBuilder->addAttribute('content', $additionalInformation['alt']);
-            $tags[] = $tagBuilder->render();
-        }
-
-        return LF . implode(LF, $tags);
-    }
 
 
 }

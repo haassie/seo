@@ -16,8 +16,10 @@ namespace TYPO3\CMS\Seo\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Seo\Manager\AbstractManager;
 use TYPO3\CMS\Seo\Manager\ManagerRegistry;
+use TYPO3\CMS\Seo\Renderer\TagRenderer;
 
 
 class PageRendererHook
@@ -31,14 +33,14 @@ class PageRendererHook
     public function getRenderedTags(array &$params)
     {
         $managerRegistry = ManagerRegistry::getInstance();
-
         $managers = $managerRegistry->getAllManagers();
         foreach ($managers as $manager) {
             /** @var AbstractManager $manager */
             $tags = $manager->getAll();
-            foreach ($tags as $tag) {
-                $params['metaTags'][] = $tag;
-            }
+
+            $renderer = GeneralUtility::makeInstance(TagRenderer::class);
+            $content = $renderer->render($tags);
+            $params['metaTags'][] = $content;
         }
     }
 }

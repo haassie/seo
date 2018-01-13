@@ -27,7 +27,7 @@ class MediaViewHelper extends AbstractViewHelper implements CompilableInterface
      */
     public function initializeArguments()
     {
-        $this->registerArgument('key', 'string', 'Key', true);
+        $this->registerArgument('name', 'string', 'Name', true);
         $this->registerArgument('src', 'string', 'a path to a file, a combined FAL identifier or an uid (int). If $treatIdAsReference is set, the integer is considered the uid of the sys_file_reference record. If you already got a FAL object, consider using the $image parameter instead');
         $this->registerArgument('treatIdAsReference', 'bool', 'given src argument is a sys_file_reference record');
         $this->registerArgument('image', 'object', 'a FAL object');
@@ -82,17 +82,21 @@ class MediaViewHelper extends AbstractViewHelper implements CompilableInterface
 
             $registry = ManagerRegistry::getInstance();
 
-            $handler = $registry->getManagerForKey($arguments['key']);
-            if ($handler) {
-                $handler->addTag(
-                    $arguments['key'],
-                    $imageService->getImageUri($processedImage, true),
-                    [
-                        'width' => $processedImage->getProperty('width'),
-                        'height' => $processedImage->getProperty('height'),
-                        'alt' => $image->getAlternative()
-                    ]
-                );
+            try {
+                $handler = $registry->getManagerForKey($arguments['name']);
+                if ($handler) {
+                    $handler->addTag(
+                        $arguments['name'],
+                        $imageService->getImageUri($processedImage, true),
+                        [
+                            'width' => $processedImage->getProperty('width'),
+                            'height' => $processedImage->getProperty('height'),
+                            'alt' => $image->getAlternative()
+                        ]
+                    );
+                }
+            }catch (\UnexpectedValueException $e) {
+                // @todo custom ex!
             }
 
         } catch (ResourceDoesNotExistException $e) {

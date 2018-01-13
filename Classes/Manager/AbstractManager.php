@@ -16,25 +16,28 @@ namespace TYPO3\CMS\Seo\Manager;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataContainer;
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataElement;
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataProperty;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 abstract class AbstractManager
 {
 
-    /** @var array */
-    protected $tags = [];
+    /** @var MetaDataProperty[] */
+    protected $container;
 
     /** @var array */
-    protected $handledKeys = [];
+    protected $handledNames = [];
 
     public function getAll(): array
     {
-        return $this->tags;
+        return $this->container;
     }
 
     public function has(string $key): bool
     {
-        return isset($this->data[$key]);
+        // TODO: Implement getTag() method.
     }
 
     public function getTag(string $key)
@@ -43,19 +46,23 @@ abstract class AbstractManager
     }
 
 
-    public function isValidKey(string $key): bool
+    public function isValidName(string $key): bool
     {
-        return in_array($key, $this->handledKeys, true);
+        return in_array($key, $this->handledNames, true);
     }
 
-    public function getAllValidKeys(): array
+    public function getAllNames(): array
     {
-        return $this->handledKeys;
+        return $this->handledNames;
     }
 
     protected function getTagBuilder(string $name = 'meta'): TagBuilder
     {
         return new TagBuilder($name);
+    }
+
+    public function addProperty(MetaDataProperty $property) {
+        $this->container[] = $property;
     }
 
 }

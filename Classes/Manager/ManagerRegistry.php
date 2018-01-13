@@ -46,11 +46,10 @@ class ManagerRegistry implements SingletonInterface
     {
         /** @var ManagerInterface $manager */
         $manager = GeneralUtility::makeInstance($class);
-        $handledKeys = $manager->getAllValidKeys();
+        $handledKeys = $manager->getAllNames();
         foreach ($handledKeys as $key) {
             $this->handledKeys[$key] = $manager;
         }
-        print_R($this->handledKeys);
         $this->registry[$class] = $manager;
     }
 

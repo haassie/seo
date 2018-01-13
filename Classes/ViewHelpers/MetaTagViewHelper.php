@@ -38,9 +38,13 @@ class MetaTagViewHelper extends AbstractViewHelper implements CompilableInterfac
     {
         $registry = ManagerRegistry::getInstance();
 
-        $handler = $registry->getManagerForKey($arguments['key']);
-        if ($handler) {
-            $handler->addTag($arguments['key'], $arguments['content']);
+        try {
+            $handler = $registry->getManagerForKey($arguments['key']);
+            if ($handler) {
+                $handler->addTag($arguments['key'], $arguments['content']);
+            }
+        } catch (\UnexpectedValueException $e) {
+            // @todo custom ex!
         }
     }
 }

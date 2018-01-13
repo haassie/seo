@@ -17,21 +17,32 @@ namespace TYPO3\CMS\Seo\Manager;
  */
 
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataElement;
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataProperty;
 
 class TwitterManager extends AbstractManager implements ManagerInterface, SingletonInterface
 {
-    protected $handledKeys = ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:site', 'twitter:url', 'twitter:creator', 'twitter:image'];
+    protected $handledNames = ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:site', 'twitter:url', 'twitter:creator', 'twitter:image'];
 
-    public function addTag(string $key, string $content, array $additionalInformation = [], bool $replace = false)
+    public function addTag(string $name, string $content, array $additionalInformation = [], bool $replace = false)
     {
-        if (!$this->isValidKey($key)) {
-            throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $key, __CLASS__), 1515499561);
+        if (!$this->isValidName($name)) {
+            throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $name, __CLASS__), 1515499561);
         }
-        $tagBuilder = $this->getTagBuilder();
-        $tagBuilder->addAttribute('name', $key);
-        $tagBuilder->addAttribute('content', $content);
+        $element = new MetaDataElement();
+        $element->setName($name);
+        $element->setContent($content);
+        $element->setDetails($additionalInformation);
 
-        $this->tags[] = $tagBuilder->render();
+        $property = new MetaDataProperty();
+        $property->setTagName('meta');
+        if ($replace) {
+            $property->replaceItem($element);
+        } else {
+            $property->addItem($element);
+        }
+
+        $this->addProperty($property);
     }
 
 }
