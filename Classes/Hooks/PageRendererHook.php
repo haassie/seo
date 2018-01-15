@@ -16,7 +16,9 @@ namespace TYPO3\CMS\Seo\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataProperty;
 use TYPO3\CMS\Seo\Manager\AbstractManager;
 use TYPO3\CMS\Seo\Manager\ManagerRegistry;
 use TYPO3\CMS\Seo\Renderer\TagRenderer;
@@ -32,15 +34,28 @@ class PageRendererHook
      */
     public function getRenderedTags(array &$params)
     {
-        $managerRegistry = ManagerRegistry::getInstance();
-        $managers = $managerRegistry->getAllManagers();
-        foreach ($managers as $manager) {
-            /** @var AbstractManager $manager */
-            $tags = $manager->getAll();
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $renderer = GeneralUtility::makeInstance(TagRenderer::class);
 
-            $renderer = GeneralUtility::makeInstance(TagRenderer::class);
-            $content = $renderer->render($tags);
-            $params['metaTags'][] = $content;
+        $getNewTags = [];
+        foreach ($params['metaTags'] as $key => $tag) {
+            if (is_object($tag) && get_class($tag) === MetaDataProperty::class) {
+                $getNewTags[] = $tag;
+                unset($params['metaTags'][$key]);
+            }
         }
+        $content = $renderer->render($getNewTags);
+        $params['metaTags'][] = $content;
+        return;
+//        $managerRegistry = ManagerRegistry::getInstance();
+//        $managers = $managerRegistry->getAllManagers();
+//        foreach ($managers as $manager) {
+//            /** @var AbstractManager $manager */
+//            $tags = $manager->getAll();
+//
+//            $renderer = GeneralUtility::makeInstance(TagRenderer::class);
+//            $content = $renderer->render($tags);
+//            $params['metaTags'][] = $content;
+//        }
     }
 }

@@ -30,11 +30,11 @@ class TwitterManager extends AbstractManager implements ManagerInterface, Single
             throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $name, __CLASS__), 1515499561);
         }
         $element = new MetaDataElement();
-        $element->setName($name);
         $element->setContent($content);
         $element->setDetails($additionalInformation);
 
         $property = new MetaDataProperty();
+        $property->setName($name);
         $property->setTagName('meta');
         if ($replace) {
             $property->replaceItem($element);

@@ -16,8 +16,8 @@ namespace TYPO3\CMS\Seo\Manager;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataContainer;
-use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataElement;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataProperty;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
@@ -25,7 +25,7 @@ abstract class AbstractManager
 {
 
     /** @var MetaDataProperty[] */
-    protected $container;
+    protected $container = [];
 
     /** @var array */
     protected $handledNames = [];
@@ -37,12 +37,23 @@ abstract class AbstractManager
 
     public function has(string $key): bool
     {
-        // TODO: Implement getTag() method.
+        foreach ($this->container as $property) {
+            if ($property->getName() === $key) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public function getTag(string $key)
+    public function getTag(string $key): array
     {
-        // TODO: Implement getTag() method.
+        foreach ($this->container as $property) {
+            if ($property->getName() === $key) {
+                return $property->getItems();
+            }
+        }
+
+        throw new \RuntimeException(sprintf('Nothing found for tag "%s"', $key), 1516042009);
     }
 
 
@@ -61,8 +72,11 @@ abstract class AbstractManager
         return new TagBuilder($name);
     }
 
-    public function addProperty(MetaDataProperty $property) {
-        $this->container[] = $property;
+    public function addProperty(MetaDataProperty $property)
+    {
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+//        $pageRenderer->metaTagsByAPI2[] = $property;
+        $pageRenderer->addMetaTag($property);
     }
 
 }

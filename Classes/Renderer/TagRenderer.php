@@ -16,7 +16,6 @@ namespace TYPO3\CMS\Seo\Renderer;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataElement;
 use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataProperty;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
@@ -37,11 +36,11 @@ class TagRenderer
 
             foreach ($property->getItems() as $element) {
                 $tag = $this->getTagBuilder($property->getTagName());
-                $tag->addAttribute($propertyOrName, $element->getName());
+                $tag->addAttribute($propertyOrName, $property->getName());
                 $tag->addAttribute('content', $element->getContent());
 
                 $out[] = $tag->render();
-                if ($element->getName() === 'og:image') {
+                if ($property->getName() === 'og:image') {
                     $this->renderAdditionalTags($out, $element, $property);
                 }
             }
@@ -52,14 +51,13 @@ class TagRenderer
 
     protected function renderAdditionalTags(&$out, MetaDataElement $element, MetaDataProperty $property)
     {
-        $key = 'og:image';
         $additionalInformation = $element->getDetails();
         $propertyOrName = $property->isUsePropertyInsteadOfName() ? 'property' : 'name';
 
         if (isset($additionalInformation['width'], $additionalInformation['height']) && $additionalInformation['width'] > 0 && $additionalInformation['height'] > 0) {
             foreach (['width', 'height'] as $propertyName) {
                 $tagBuilder = $this->getTagBuilder($property->getTagName());
-                $tagBuilder->addAttribute($propertyOrName, $key . ':' . $propertyName);
+                $tagBuilder->addAttribute($propertyOrName, 'og:image:' . $propertyName);
                 $tagBuilder->addAttribute('content', $additionalInformation[$propertyName]);
 
                 $out[] = $tagBuilder->render();
@@ -67,13 +65,13 @@ class TagRenderer
         }
         if (isset($additionalInformation['alt']) && !empty($additionalInformation['alt'])) {
             $tagBuilder = $this->getTagBuilder($property->getTagName());
-            $tagBuilder->addAttribute($propertyOrName, $key . ':alternative');
+            $tagBuilder->addAttribute($propertyOrName, 'og:image:alternative');
             $tagBuilder->addAttribute('content', $additionalInformation['alt']);
             $out[] = $tagBuilder->render();
         }
     }
 
-    private function getTagBuilder(string $name)
+    private function getTagBuilder(string $name): TagBuilder
     {
         return new TagBuilder($name);
     }

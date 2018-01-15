@@ -19,29 +19,10 @@ namespace TYPO3\CMS\Seo\Domain\Model\Dto;
 class MetaDataElement {
 
     /** @var string */
-    protected $name = '';
-
-    /** @var string */
     protected $content = '';
 
     /** @var array */
     protected $details = [];
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
 
     /**
      * @return string
