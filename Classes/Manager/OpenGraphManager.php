@@ -42,7 +42,7 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
         $property = new MetaDataProperty($name);
         $property->add($element, $replace);
 
-        $this->addProperty($property);
+        $this->addProperty($property, $replace);
     }
 
     protected function renderAdditionalTags(array $additionalInformation): array

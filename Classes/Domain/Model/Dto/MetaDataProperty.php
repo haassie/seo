@@ -16,6 +16,8 @@ namespace TYPO3\CMS\Seo\Domain\Model\Dto;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
+
 class MetaDataProperty
 {
 
@@ -61,6 +63,7 @@ class MetaDataProperty
 
     public function add(MetaDataElement $element, bool $replace = false)
     {
+        // todo: remove replace here
         if ($replace) {
             $this->items = [$element];
         } else {

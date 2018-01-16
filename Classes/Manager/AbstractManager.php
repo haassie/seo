@@ -30,6 +30,14 @@ abstract class AbstractManager
     /** @var array */
     protected $handledNames = [];
 
+    /** @var PageRenderer */
+    protected $pageRenderer;
+
+    public function __construct()
+    {
+        $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+    }
+
     public function getAll(): array
     {
         return $this->container;
@@ -72,10 +80,10 @@ abstract class AbstractManager
         return new TagBuilder($name);
     }
 
-    public function addProperty(MetaDataProperty $property)
+    public function addProperty(MetaDataProperty $property, bool $replace)
     {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->addMetaTag($property);
+        $this->pageRenderer->addMetaTag($property);
+        // @todo add replace
     }
 
 }
