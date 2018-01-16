@@ -41,7 +41,7 @@ class TwitterManager extends AbstractManager implements ManagerInterface, Single
         $property = new MetaDataProperty($name);
         $property->add($element, $replace);
 
-        $this->addProperty($property);
+        $this->addProperty($property, $replace);
     }
 
 }
