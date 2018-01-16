@@ -16,45 +16,44 @@ namespace TYPO3\CMS\Seo\Domain\Model\Dto;
  * The TYPO3 project - inspiring people to share!
  */
 
-class MetaDataElement {
 
-    /** @var string */
-    protected $content = '';
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
-    /** @var array */
-    protected $details = [];
+class MetaDataElement
+{
+
+    /** @var TagBuilder */
+    protected $tag;
+
+    /** @var TagBuilder[] */
+    protected $additionalTags = [];
 
     /**
-     * @return string
+     * MetaDataElement constructor.
+     *
+     * @param TagBuilder $tag
+     * @param TagBuilder[] $additionalTags
      */
-    public function getContent(): string
+    public function __construct(TagBuilder $tag, array $additionalTags = [])
     {
-        return $this->content;
+        $this->tag = $tag;
+        $this->additionalTags = $additionalTags;
     }
 
     /**
-     * @param string $content
+     * @return TagBuilder
      */
-    public function setContent(string $content)
+    public function getTag(): TagBuilder
     {
-        $this->content = $content;
+        return $this->tag;
     }
 
     /**
-     * @return array
+     * @return TagBuilder[]
      */
-    public function getDetails(): array
+    public function getAdditionalTags(): array
     {
-        return $this->details;
+        return $this->additionalTags;
     }
-
-    /**
-     * @param array $details
-     */
-    public function setDetails(array $details)
-    {
-        $this->details = $details;
-    }
-
 
 }

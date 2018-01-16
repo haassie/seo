@@ -23,13 +23,17 @@ class MetaDataProperty
     protected $items = [];
 
     /** @var string */
-    protected $name = '';
+    protected $name;
 
-    /** @var string */
-    protected $tagName = '';
+    /**
+     * MetaDataProperty constructor.
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
 
-    /** @var bool */
-    protected $usePropertyInsteadOfName = false;
 
     /**
      * @return MetaDataElement[]
@@ -55,63 +59,13 @@ class MetaDataProperty
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
+    public function add(MetaDataElement $element, bool $replace = false)
     {
-        $this->name = $name;
+        if ($replace) {
+            $this->items = [$element];
+        } else {
+            $this->items[] = $element;
+        }
     }
-
-    /**
-     * @param MetaDataElement $element
-     */
-    public function addItem(MetaDataElement $element)
-    {
-        $this->items[] = $element;
-    }
-
-    /**
-     * @param MetaDataElement $element
-     */
-    public function replaceItem(MetaDataElement $element)
-    {
-        $this->items = [$element];
-    }
-
-    /**
-     * @return string
-     */
-    public function getTagName(): string
-    {
-        return $this->tagName;
-    }
-
-    /**
-     * @param string $tagName
-     */
-    public function setTagName(string $tagName)
-    {
-        $this->tagName = $tagName;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isUsePropertyInsteadOfName(): bool
-    {
-        return $this->usePropertyInsteadOfName;
-    }
-
-    /**
-     * @param bool $usePropertyInsteadOfName
-     */
-    public function setUsePropertyInsteadOfName(bool $usePropertyInsteadOfName)
-    {
-        $this->usePropertyInsteadOfName = $usePropertyInsteadOfName;
-    }
-
-
-
 
 }

@@ -24,23 +24,22 @@ class TwitterManager extends AbstractManager implements ManagerInterface, Single
 {
     protected $handledNames = ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:site', 'twitter:url', 'twitter:creator', 'twitter:image'];
 
-    public function addTag(string $name, string $content, array $additionalInformation = [], bool $replace = false)
+    public function addTag(string $name, string $content, array $additionalInformation = [], bool $replace = true)
     {
         if (!$this->isValidName($name)) {
             throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $name, __CLASS__), 1515499561);
         }
-        $element = new MetaDataElement();
-        $element->setContent($content);
-        $element->setDetails($additionalInformation);
 
-        $property = new MetaDataProperty();
-        $property->setName($name);
-        $property->setTagName('meta');
-        if ($replace) {
-            $property->replaceItem($element);
-        } else {
-            $property->addItem($element);
-        }
+        $tag = $this->getTagBuilder();
+        $tag->addAttributes([
+            'name' => $name,
+            'content' => $content
+        ]);
+
+        $element = new MetaDataElement($tag);
+
+        $property = new MetaDataProperty($name);
+        $property->add($element, $replace);
 
         $this->addProperty($property);
     }

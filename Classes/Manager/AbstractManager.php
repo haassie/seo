@@ -75,7 +75,6 @@ abstract class AbstractManager
     public function addProperty(MetaDataProperty $property)
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-//        $pageRenderer->metaTagsByAPI2[] = $property;
         $pageRenderer->addMetaTag($property);
     }
 

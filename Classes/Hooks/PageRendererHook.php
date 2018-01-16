@@ -16,12 +16,8 @@ namespace TYPO3\CMS\Seo\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Seo\Domain\Model\Dto\MetaDataProperty;
-use TYPO3\CMS\Seo\Manager\AbstractManager;
-use TYPO3\CMS\Seo\Manager\ManagerRegistry;
-use TYPO3\CMS\Seo\Renderer\TagRenderer;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 
 class PageRendererHook
@@ -34,28 +30,23 @@ class PageRendererHook
      */
     public function getRenderedTags(array &$params)
     {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $renderer = GeneralUtility::makeInstance(TagRenderer::class);
-
-        $getNewTags = [];
+        $handledProperties = [];
         foreach ($params['metaTags'] as $key => $tag) {
             if (is_object($tag) && get_class($tag) === MetaDataProperty::class) {
-                $getNewTags[] = $tag;
+                $handledProperties[] = $tag;
                 unset($params['metaTags'][$key]);
             }
         }
-        $content = $renderer->render($getNewTags);
-        $params['metaTags'][] = $content;
-        return;
-//        $managerRegistry = ManagerRegistry::getInstance();
-//        $managers = $managerRegistry->getAllManagers();
-//        foreach ($managers as $manager) {
-//            /** @var AbstractManager $manager */
-//            $tags = $manager->getAll();
-//
-//            $renderer = GeneralUtility::makeInstance(TagRenderer::class);
-//            $content = $renderer->render($tags);
-//            $params['metaTags'][] = $content;
-//        }
+        foreach ($handledProperties as $metaDataProperty) {
+            /** @var MetaDataProperty $metaDataProperty */
+            foreach ($metaDataProperty->getItems() as $item) {
+                $params['metaTags'][] = $item->getTag()->render();
+                foreach ($item->getAdditionalTags() as $additionalTag) {
+                    if (is_object($additionalTag) && get_class($additionalTag) === TagBuilder::class) {
+                        $params['metaTags'][] = $additionalTag->render();
+                    }
+                }
+            }
+        }
     }
 }

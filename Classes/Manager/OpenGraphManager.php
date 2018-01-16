@@ -24,27 +24,50 @@ class OpenGraphManager extends AbstractManager implements ManagerInterface, Sing
 {
     protected $handledNames = ['og:title', 'og:type', 'og:url', 'og:image', 'og:description', 'og:site_name'];
 
-    public function addTag(string $name, string $content, array $additionalInformation = [], bool $replace = false)
+    public function addTag(string $name, string $content, array $additionalInformation = [], bool $replace = true)
     {
         if (!$this->isValidName($name)) {
             throw new \UnexpectedValueException(sprintf('Key "%s" is not allowed by %s.', $name, __CLASS__), 1515499561);
         }
-        $element = new MetaDataElement();
-        $element->setContent($content);
-        $element->setDetails($additionalInformation);
 
+        $tagBuilder = $this->getTagBuilder();
+        $tagBuilder->addAttributes([
+            'property' => $name,
+            'content' => $content
+        ]);
+        $additionalTags = $name === 'og:image' ? $this->renderAdditionalTags($additionalInformation) : [];
 
-        $property = new MetaDataProperty();
-        $property->setName($name);
-        $property->setTagName('meta');
-        $property->setUsePropertyInsteadOfName(true);
+        $element = new MetaDataElement($tagBuilder, $additionalTags);
 
-        if ($replace) {
-            $property->replaceItem($element);
-        } else {
-            $property->addItem($element);
-        }
+        $property = new MetaDataProperty($name);
+        $property->add($element, $replace);
 
         $this->addProperty($property);
+    }
+
+    protected function renderAdditionalTags(array $additionalInformation): array
+    {
+        $additionalTags = [];
+
+        if (isset($additionalInformation['width'], $additionalInformation['height']) && $additionalInformation['width'] > 0 && $additionalInformation['height'] > 0) {
+            foreach (['width', 'height'] as $propertyName) {
+                $tagBuilder = $this->getTagBuilder();
+                $tagBuilder->addAttributes([
+                    'property' => 'og:image:' . $propertyName,
+                    'content' => $additionalInformation[$propertyName]
+                ]);
+                $additionalTags[] = $tagBuilder;
+            }
+        }
+        if (isset($additionalInformation['alt']) && !empty($additionalInformation['alt'])) {
+            $tagBuilder = $this->getTagBuilder();
+            $tagBuilder->addAttributes([
+                'property' => 'og:image:alternative',
+                'content' => $additionalInformation['alt']
+            ]);
+            $additionalTags[] = $tagBuilder;
+        }
+
+        return $additionalTags;
     }
 }
